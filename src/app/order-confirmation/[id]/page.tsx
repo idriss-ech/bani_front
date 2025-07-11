@@ -41,7 +41,7 @@ export default function OrderConfirmationPage() {
 
   // Fonction pour imprimer la page
   const handlePrint = () => {
-    if (printRef.current) {
+    if (printRef.current && order) {
       // Créer une nouvelle fenêtre
       const printWindow = window.open("", "_blank", "height=600,width=800");
 
@@ -64,7 +64,7 @@ export default function OrderConfirmationPage() {
         })
         .join("");
 
-      // Préparer le contenu HTML
+      // Préparer le contenu HTML avec null check
       const printContent = `
         <!DOCTYPE html>
         <html>
@@ -95,7 +95,7 @@ export default function OrderConfirmationPage() {
         </html>
       `;
 
-      // Écrire le contenu et lancer l&apos;impression
+      // Écrire le contenu et lancer l'impression
       printWindow.document.open();
       printWindow.document.write(printContent);
       printWindow.document.close();
@@ -179,7 +179,7 @@ export default function OrderConfirmationPage() {
               <div>
                 <p className="text-gray-500">Total</p>
                 <p className="font-medium">
-                  {parseFloat(order.total).toFixed(2)} DH
+                  {order.total.toFixed(2)} DH
                 </p>
               </div>
               <div>
@@ -266,7 +266,7 @@ export default function OrderConfirmationPage() {
                       Total
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-bold">
-                      {parseFloat(order.total).toFixed(2)} DH
+                      {order.total.toFixed(2)} DH
                     </td>
                   </tr>
                 </tfoot>

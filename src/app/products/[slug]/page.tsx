@@ -19,7 +19,7 @@ import {
   Heart,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { Product } from "@/types"; 
+import { Product } from "@/types";
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
@@ -52,7 +52,13 @@ export default function ProductDetailPage() {
   // Gestion du panier
   const handleAddToCart = () => {
     if (product) {
-      addToCart(product, quantity);
+      // Ensure stock is a number by providing a default of 0 if undefined
+      const productWithStock = {
+        ...product,
+        stock: product.stock ?? 0, // Use nullish coalescing to provide a default
+      };
+
+      addToCart(productWithStock, quantity);
       toast.success(`${product.title} ajouté au panier`);
     }
   };
@@ -171,9 +177,12 @@ export default function ProductDetailPage() {
                   <>
                     <div className="absolute inset-0 bg-white/50 backdrop-blur-sm"></div>
                     <Image
-                      src={getStrapiMedia(product.images[selectedImage].url) || ""}
+                      src={
+                        getStrapiMedia(product.images[selectedImage].url) || ""
+                      }
                       alt={
-                        product.images[selectedImage].alternativeText || product.title
+                        product.images[selectedImage].alternativeText ||
+                        product.title
                       }
                       fill
                       className="object-contain p-4 z-10"
@@ -236,7 +245,11 @@ export default function ProductDetailPage() {
                     >
                       <div className="absolute inset-0 bg-white/50"></div>
                       <Image
-                        src={getStrapiMedia(image.formats.thumbnail.url) || ""}
+                        src={
+                          getStrapiMedia(
+                            image.formats?.thumbnail?.url ?? null
+                          ) || ""
+                        }
                         alt={
                           image.alternativeText ||
                           `${product.title} - image ${index + 1}`
@@ -288,10 +301,10 @@ export default function ProductDetailPage() {
 
                 {/* Stock */}
                 <div className="flex items-center">
-                  {product.stock > 0 ? (
+                  {(product.stock ?? 0) > 0 ? (
                     <div className="text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm flex items-center">
                       <Check className="h-4 w-4 mr-1" />
-                      En stock ({product.stock} disponibles)
+                      En stock ({product.stock ?? 0} disponibles)
                     </div>
                   ) : (
                     <div className="text-orange-600 bg-orange-50 px-3 py-1 rounded-full text-sm">
@@ -345,9 +358,9 @@ export default function ProductDetailPage() {
                     />
                     <button
                       onClick={() =>
-                        setQuantity((q) => Math.min(product.stock, q + 1))
+                        setQuantity((q) => Math.min(product.stock ?? 1, q + 1))
                       }
-                      disabled={quantity >= product.stock}
+                      disabled={quantity >= (product.stock ?? 0)}
                       className="w-10 h-10 rounded-r border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-50"
                     >
                       +
@@ -366,11 +379,13 @@ export default function ProductDetailPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     onClick={handleAddToCart}
-                    disabled={product.stock <= 0}
+                    disabled={(product.stock ?? 0) <= 0}
                     className="bg-red-600 hover:bg-red-700 text-white flex-1 h-12 text-base"
                   >
                     <ShoppingCart className="h-5 w-5 mr-2" />
-                    {product.stock > 0 ? "Ajouter au panier" : "Indisponible"}
+                    {(product.stock ?? 0) > 0
+                      ? "Ajouter au panier"
+                      : "Indisponible"}
                   </Button>
                   <Link href="/cart" className="flex-1">
                     <Button
