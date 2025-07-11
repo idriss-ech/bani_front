@@ -72,13 +72,17 @@ const Testimonials: React.FC = () => {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    // Store the current ref value in a local variable
+    const currentElement = sectionRef.current;
+
+    if (currentElement) {
+      observer.observe(currentElement);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      // Use the stored value in the cleanup function
+      if (currentElement) {
+        observer.unobserve(currentElement);
       }
     };
   }, []);

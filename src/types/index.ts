@@ -223,3 +223,20 @@ export interface OrdersListResponse {
     };
   };
 }
+
+// Ajout de l'interface OrderInput
+export interface OrderInput {
+  orderNumber: string;
+  command_status: "pending" | "processing" | "completed" | "cancelled";
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  notes: string;
+  items: string; // Pour les éléments sous forme de chaîne
+  total: number;
+}

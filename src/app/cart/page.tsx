@@ -9,6 +9,7 @@ import { getStrapiMedia, createOrder } from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ShoppingCart, Trash2, X } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { OrderInput } from "@/types";
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -54,9 +55,9 @@ export default function CartPage() {
       const orderNumber = `ORD-${timestamp}`;
 
       // Préparer les données de commande avec format plat (sans imbrication)
-      const orderData = {
+      const orderData: OrderInput = {
         orderNumber: orderNumber,
-        command_status: "pending", // Utiliser command_status au lieu de status
+        command_status: "pending",
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,

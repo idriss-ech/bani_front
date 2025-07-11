@@ -1,4 +1,4 @@
-import { Order } from "@/types";
+import { OrderInput, OrderResponse } from "@/types";
 import axios from "axios";
 
 // URL de base de l'API Strapi
@@ -75,7 +75,9 @@ export const fetchProductBySlug = async (slug: string) => {
   }
 };
 
-export const createOrder = async (orderData: Order) => {
+export const createOrder = async (
+  orderData: OrderInput
+): Promise<OrderResponse> => {
   try {
     const response = await api.post("/commands", { data: orderData });
     return response.data;
