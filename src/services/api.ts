@@ -1,12 +1,13 @@
-import axios from 'axios';
+import { Order } from "@/types";
+import axios from "axios";
 
 // URL de base de l'API Strapi
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337";
 
 // Helper pour formater les URL des médias Strapi
 export const getStrapiMedia = (url: string | null) => {
   if (!url) return null;
-  if (url.startsWith('http') || url.startsWith('//')) return url;
+  if (url.startsWith("http") || url.startsWith("//")) return url;
   return `${API_URL}${url}`;
 };
 
@@ -18,14 +19,14 @@ const api = axios.create({
 // Service pour récupérer les catégories
 export const fetchCategories = async () => {
   try {
-    const response = await api.get('/categories', {
+    const response = await api.get("/categories", {
       params: {
-        populate: '*', // Récupérer les relations et médias
+        populate: "*", // Récupérer les relations et médias
       },
     });
     return response.data.data;
   } catch (error) {
-    console.error('Erreur lors de la récupération des catégories:', error);
+    console.error("Erreur lors de la récupération des catégories:", error);
     return [];
   }
 };
@@ -33,14 +34,14 @@ export const fetchCategories = async () => {
 // Service pour récupérer les produits
 export const fetchProducts = async () => {
   try {
-    const response = await api.get('/products', {
+    const response = await api.get("/products", {
       params: {
-        populate: '*',
+        populate: "*",
       },
     });
     return response.data; // Ajoutez cette ligne pour retourner les données
   } catch (error) {
-    console.error('Erreur lors de la récupération des produits:', error);
+    console.error("Erreur lors de la récupération des produits:", error);
     return [];
   }
 };
@@ -54,30 +55,32 @@ export const fetchProductBySlug = async (slug: string) => {
             $eq: slug,
           },
         },
-        populate: '*',
+        populate: "*",
       },
     });
 
     const products = response.data?.data;
-console.log(`Produits récupérés pour le slug "${slug}":`, products);
+    console.log(`Produits récupérés pour le slug "${slug}":`, products);
     if (Array.isArray(products) && products.length > 0) {
-      return products[0]; 
+      return products[0];
     }
 
     return null;
   } catch (error) {
-    console.error(`Erreur lors de la récupération du produit avec le slug "${slug}":`, error);
+    console.error(
+      `Erreur lors de la récupération du produit avec le slug "${slug}":`,
+      error
+    );
     return null;
   }
 };
 
-
-export const createOrder = async (orderData: any) => {
+export const createOrder = async (orderData: Order) => {
   try {
-    const response = await api.post('/commands', { data: orderData });
+    const response = await api.post("/commands", { data: orderData });
     return response.data;
   } catch (error) {
-    console.error('Erreur lors de la création de la commande:', error);
+    console.error("Erreur lors de la création de la commande:", error);
     throw error;
   }
 };
@@ -87,12 +90,15 @@ export const fetchOrder = async (id: string) => {
   try {
     const response = await api.get(`/commands/${id}`, {
       params: {
-        populate: '*',
+        populate: "*",
       },
     });
     return response.data;
   } catch (error) {
-    console.error(`Erreur lors de la récupération de la commande ${id}:`, error);
+    console.error(
+      `Erreur lors de la récupération de la commande ${id}:`,
+      error
+    );
     return null;
   }
 };
@@ -100,18 +106,21 @@ export const fetchOrder = async (id: string) => {
 // Service pour récupérer les produits populaires
 export const fetchPopularProducts = async (limit = 4) => {
   try {
-    const response = await api.get('/products', {
+    const response = await api.get("/products", {
       params: {
-        populate: '*',
-        sort: 'featured:desc',
+        populate: "*",
+        sort: "featured:desc",
         pagination: {
-          limit: limit
-        }
+          limit: limit,
+        },
       },
     });
     return response.data;
   } catch (error) {
-    console.error('Erreur lors de la récupération des produits populaires:', error);
+    console.error(
+      "Erreur lors de la récupération des produits populaires:",
+      error
+    );
     return { data: [] };
   }
 };

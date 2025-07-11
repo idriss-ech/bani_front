@@ -1,13 +1,14 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Images du carrousel avec textes
 const slides = [
   {
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
+    image:
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
     alt: "Fournitures scolaires",
     title: "Prêt pour la rentrée",
     subtitle: "Tous les essentiels pour une année scolaire réussie",
@@ -15,7 +16,8 @@ const slides = [
     buttonLink: "/products",
   },
   {
-    image: "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
+    image:
+      "https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
     alt: "Élève avec sac à dos",
     title: "Promotions spéciales",
     subtitle: "Jusqu'à -30% sur une sélection de cartables et sacs",
@@ -23,7 +25,8 @@ const slides = [
     buttonLink: "/products?on_sale=true",
   },
   {
-    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
+    image:
+      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80",
     alt: "Pile de livres",
     title: "Livres et manuels",
     subtitle: "Trouvez tous vos ouvrages de référence",
@@ -57,17 +60,20 @@ const HeroSlider: React.FC = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
-    timeoutRef.current = setTimeout(() => {
-      nextSlide();
-    }, 5000); // Changer de slide toutes les 5 secondes
-    
+
+    // Define the slide advancement function inside the effect
+    const advanceSlide = () => {
+      setCurrent((prevCurrent) => (prevCurrent + 1) % slidesCount);
+    };
+
+    timeoutRef.current = setTimeout(advanceSlide, 5000); // Changer de slide toutes les 5 secondes
+
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [current]);
+  }, [current, slidesCount]); // Add slidesCount to dependencies
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8">
@@ -78,7 +84,7 @@ const HeroSlider: React.FC = () => {
             <div
               key={index}
               className={`absolute top-0 left-0 w-full h-full transition-all duration-1000 ease-in-out ${
-                index === current ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                index === current ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
             >
               {/* Image avec overlay */}
@@ -93,37 +99,49 @@ const HeroSlider: React.FC = () => {
                   priority={index === 0}
                 />
               </div>
-              
+
               {/* Texte et bouton */}
               <div className="absolute inset-0 flex flex-col justify-center px-12 sm:px-16 md:px-20 lg:px-24 z-20">
                 <div className="max-w-xl mx-2 md:mx-0">
-                  <h2 
+                  <h2
                     className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4"
-                    style={{ 
-                      opacity: index === current ? 1 : 0, 
-                      transform: index === current ? 'translateY(0)' : 'translateY(20px)',
-                      transition: 'opacity 700ms ease-in-out 300ms, transform 700ms ease-in-out 300ms',
-                      textShadow: '0 1px 2px rgba(0, 0, 0, 0.4)'
+                    style={{
+                      opacity: index === current ? 1 : 0,
+                      transform:
+                        index === current
+                          ? "translateY(0)"
+                          : "translateY(20px)",
+                      transition:
+                        "opacity 700ms ease-in-out 300ms, transform 700ms ease-in-out 300ms",
+                      textShadow: "0 1px 2px rgba(0, 0, 0, 0.4)",
                     }}
                   >
                     {slide.title}
                   </h2>
-                  <p 
+                  <p
                     className="text-white/90 text-base sm:text-lg md:text-xl mb-4 md:mb-6 max-w-md"
-                    style={{ 
-                      opacity: index === current ? 1 : 0, 
-                      transform: index === current ? 'translateY(0)' : 'translateY(20px)',
-                      transition: 'opacity 700ms ease-in-out 500ms, transform 700ms ease-in-out 500ms',
-                      textShadow: '0 1px 1px rgba(0, 0, 0, 0.3)'
+                    style={{
+                      opacity: index === current ? 1 : 0,
+                      transform:
+                        index === current
+                          ? "translateY(0)"
+                          : "translateY(20px)",
+                      transition:
+                        "opacity 700ms ease-in-out 500ms, transform 700ms ease-in-out 500ms",
+                      textShadow: "0 1px 1px rgba(0, 0, 0, 0.3)",
                     }}
                   >
                     {slide.subtitle}
                   </p>
                   <div
-                    style={{ 
-                      opacity: index === current ? 1 : 0, 
-                      transform: index === current ? 'translateY(0)' : 'translateY(20px)',
-                      transition: 'opacity 700ms ease-in-out 700ms, transform 700ms ease-in-out 700ms',
+                    style={{
+                      opacity: index === current ? 1 : 0,
+                      transform:
+                        index === current
+                          ? "translateY(0)"
+                          : "translateY(20px)",
+                      transition:
+                        "opacity 700ms ease-in-out 700ms, transform 700ms ease-in-out 700ms",
                     }}
                   >
                     <Link href={slide.buttonLink}>
@@ -136,7 +154,7 @@ const HeroSlider: React.FC = () => {
               </div>
             </div>
           ))}
-          
+
           {/* Flèches de navigation */}
           <button
             className="absolute top-1/2 left-3 sm:left-5 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-2 sm:p-3 backdrop-blur-sm z-30 transition-all duration-300 shadow-lg"
@@ -152,7 +170,7 @@ const HeroSlider: React.FC = () => {
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </button>
-          
+
           {/* Indicateurs */}
           <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 flex justify-center space-x-2 z-30">
             {slides.map((_, index) => (
@@ -160,9 +178,9 @@ const HeroSlider: React.FC = () => {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`h-2 sm:h-3 rounded-full transition-all duration-300 shadow-md ${
-                  index === current 
-                    ? 'bg-red-600 w-6 sm:w-8' 
-                    : 'bg-white/60 hover:bg-white w-2 sm:w-3'
+                  index === current
+                    ? "bg-red-600 w-6 sm:w-8"
+                    : "bg-white/60 hover:bg-white w-2 sm:w-3"
                 }`}
                 aria-label={`Aller à la slide ${index + 1}`}
               />

@@ -22,13 +22,17 @@ const AboutSection: React.FC = () => {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    // Store the current value of the ref
+    const currentElement = sectionRef.current;
+
+    if (currentElement) {
+      observer.observe(currentElement);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      // Use the stored value in the cleanup function
+      if (currentElement) {
+        observer.unobserve(currentElement);
       }
     };
   }, []);
@@ -140,7 +144,7 @@ const AboutSection: React.FC = () => {
             Découvrez BANI
           </h2>
           <p className="text-gray-600 max-w-3xl mx-auto text-lg">
-            Plus qu'un simple fournisseur, nous sommes votre partenaire de
+            Plus qu&apos;un simple fournisseur, nous sommes votre partenaire de
             confiance pour toutes vos fournitures scolaires et de bureau
           </p>
         </div>
@@ -155,7 +159,6 @@ const AboutSection: React.FC = () => {
                 : "opacity-0 translate-x-10"
             }`}
           >
-           
             {/* Image simple remplaçant le blob */}
             <div className="relative mt-16 mb-12 max-w-xl mx-auto">
               <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-xl">

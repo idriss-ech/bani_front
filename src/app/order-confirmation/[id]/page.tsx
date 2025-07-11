@@ -6,10 +6,12 @@ import Link from "next/link";
 import { CheckCircle, ArrowRight, Loader2, Printer } from "lucide-react";
 import { fetchOrder } from "@/services/api";
 import { Button } from "@/components/ui/button";
+import { Order, OrderItem } from "@/types"; // Import proper types
 
 export default function OrderConfirmationPage() {
   const { id } = useParams();
-  const [order, setOrder] = useState<any>(null);
+  // Use Order type instead of any
+  const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const printRef = useRef<HTMLDivElement>(null);
@@ -55,7 +57,7 @@ export default function OrderConfirmationPage() {
             return Array.from(styleSheet.cssRules)
               .map((rule) => rule.cssText)
               .join("");
-          } catch (e) {
+          } catch {
             // Feuilles de style CORS peuvent générer des erreurs
             return "";
           }
@@ -93,7 +95,7 @@ export default function OrderConfirmationPage() {
         </html>
       `;
 
-      // Écrire le contenu et lancer l'impression
+      // Écrire le contenu et lancer l&apos;impression
       printWindow.document.open();
       printWindow.document.write(printContent);
       printWindow.document.close();
@@ -117,12 +119,13 @@ export default function OrderConfirmationPage() {
             {error || "Commande non trouvée"}
           </h1>
           <p className="mb-6">
-            Nous n'avons pas pu trouver les détails de votre commande. Veuillez
-            vérifier le numéro de commande ou contacter notre service client.
+            Nous n&apos;avons pas pu trouver les détails de votre commande.
+            Veuillez vérifier le numéro de commande ou contacter notre service
+            client.
           </p>
           <Link href="/">
             <Button className="bg-red-600 hover:bg-red-700">
-              Retour à l'accueil
+              Retour à l&apos;accueil
             </Button>
           </Link>
         </div>
@@ -176,7 +179,7 @@ export default function OrderConfirmationPage() {
               <div>
                 <p className="text-gray-500">Total</p>
                 <p className="font-medium">
-                  {parseFloat(order.total).toFixed(2)} €
+                  {parseFloat(order.total).toFixed(2)} DH
                 </p>
               </div>
               <div>
@@ -235,7 +238,7 @@ export default function OrderConfirmationPage() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {order.items.map((item: any, index: number) => (
+                  {order.items.map((item: OrderItem, index: number) => (
                     <tr key={index}>
                       <td className="px-6 py-4">
                         <div className="font-medium text-gray-900">
@@ -246,10 +249,10 @@ export default function OrderConfirmationPage() {
                         {item.quantity}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-gray-500">
-                        {item.unitPrice.toFixed(2)} €
+                        {item.unitPrice.toFixed(2)} DH
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">
-                        {(item.quantity * item.unitPrice).toFixed(2)} €
+                        {(item.quantity * item.unitPrice).toFixed(2)} DH
                       </td>
                     </tr>
                   ))}
@@ -263,7 +266,7 @@ export default function OrderConfirmationPage() {
                       Total
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-bold">
-                      {parseFloat(order.total).toFixed(2)} €
+                      {parseFloat(order.total).toFixed(2)} DH
                     </td>
                   </tr>
                 </tfoot>

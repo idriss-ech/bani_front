@@ -103,7 +103,7 @@ export interface ProductImage {
   url: string;
   previewUrl?: string | null;
   provider?: string;
-  provider_metadata?: any;
+  provider_metadata?: Record<string, unknown>;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -174,4 +174,52 @@ export interface Cart {
   items: CartItem[];
   count: number;
   total: number;
+}
+
+// Types pour les commandes
+export interface OrderItem {
+  productId: number;
+  title: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface Order {
+  id: number;
+  documentId: string;
+  orderNumber: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  items: OrderItem[];
+  command_status: "pending" | "processing" | "completed" | "cancelled";
+  total: number;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+// Type pour la réponse de l'API pour une commande unique
+export interface OrderResponse {
+  data: Order;
+  meta: Record<string, never>; // Explicitly empty object type
+}
+
+// Type pour la réponse de l'API pour une liste de commandes
+export interface OrdersListResponse {
+  data: Order[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }

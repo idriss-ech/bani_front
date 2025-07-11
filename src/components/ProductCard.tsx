@@ -16,7 +16,6 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -30,7 +29,9 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product, 1);
+    // Ensure stock is a number before passing to addToCart
+    const safeProduct = { ...product, stock: product.stock ?? 0 };
+    addToCart(safeProduct, 1);
 
     toast.success(`${product.title} ajouté au panier`);
   };
@@ -49,8 +50,6 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       } flex flex-col h-full shadow-sm hover:shadow-lg`}
       style={{ transitionDelay: `${index * delay}ms` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <Link
         href={`/products/${product.slug}`}
@@ -114,12 +113,12 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
                 {product.category.name}
               </span>
             )}
-            
+
             {/* Titre avec hauteur fixe */}
             <h3 className="text-lg font-semibold text-gray-800 group-hover:text-red-600 transition-colors duration-300 line-clamp-2 min-h-[3.5rem] mb-2">
               {product.title}
             </h3>
-            
+
             {/* Prix avec espacement ajusté */}
             <div className="flex items-center mt-1">
               <span className="text-lg font-bold text-gray-900">
