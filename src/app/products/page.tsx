@@ -293,10 +293,10 @@ function ProductsContent() {
               <div className="flex flex-col space-y-4">
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-500">
-                    Min: {priceRange[0]} €
+                    Min: {priceRange[0]} DH
                   </span>
                   <span className="text-sm text-gray-500">
-                    Max: {priceRange[1]} €
+                    Max: {priceRange[1]} DH
                   </span>
                 </div>
 

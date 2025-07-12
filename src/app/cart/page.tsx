@@ -123,7 +123,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container h-screen mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">
           {step === "cart" ? "Votre panier" : "Finaliser votre commande"}
@@ -246,11 +246,11 @@ export default function CartPage() {
 
                           <div className="text-right">
                             <div className="font-medium">
-                              {(itemPrice * item.quantity).toFixed(2)} €
+                              {(itemPrice * item.quantity).toFixed(2)} DH
                             </div>
                             {item.quantity > 1 && (
                               <div className="text-sm text-gray-500">
-                                {itemPrice.toFixed(2)} € l&rsquo;unité
+                                {itemPrice.toFixed(2)} DH l&rsquo;unité
                               </div>
                             )}
                           </div>
@@ -283,7 +283,7 @@ export default function CartPage() {
               <div className="space-y-3 mb-4">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Sous-total</span>
-                  <span>{cart.total.toFixed(2)} €</span>
+                  <span>{cart.total.toFixed(2)} DH</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Livraison</span>
@@ -294,7 +294,7 @@ export default function CartPage() {
               <div className="border-t border-b py-4 my-4">
                 <div className="flex justify-between font-bold">
                   <span>Total</span>
-                  <span className="text-xl">{cart.total.toFixed(2)} €</span>
+                  <span className="text-xl">{cart.total.toFixed(2)} DH</span>
                 </div>
               </div>
 
@@ -485,7 +485,7 @@ export default function CartPage() {
               <div className="space-y-3 mb-4">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Sous-total</span>
-                  <span>{cart.total.toFixed(2)} €</span>
+                  <span>{cart.total.toFixed(2)} DH</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Livraison</span>
@@ -496,7 +496,7 @@ export default function CartPage() {
               <div className="border-t border-b py-4 my-4">
                 <div className="flex justify-between font-bold">
                   <span>Total</span>
-                  <span className="text-xl">{cart.total.toFixed(2)} €</span>
+                  <span className="text-xl">{cart.total.toFixed(2)} DH</span>
                 </div>
               </div>
 

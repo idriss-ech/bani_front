@@ -33,7 +33,7 @@ export default function AboutPage() {
             <div className="mt-6 flex flex-col items-center gap-2">
               <div className="flex items-center gap-2">
                 <Image
-                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d"
                   alt="Professeur Brahim"
                   width={48}
                   height={48}

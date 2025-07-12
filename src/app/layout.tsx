@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import { CartProvider } from "@/hooks/useCart";
+import BackToTop from "@/components/ui/BackToTop";
+import SocialMediaBar from "@/components/ui/SocialMediaBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +34,8 @@ const RootLayout = ({
         <Header />
         {children}
         <Footer />
+        <BackToTop />
+        <SocialMediaBar />
         <Toaster position="top-right" />
       </CartProvider>
     </body>

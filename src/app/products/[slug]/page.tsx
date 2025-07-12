@@ -290,11 +290,11 @@ export default function ProductDetailPage() {
                       product.on_sale ? "text-red-600" : "text-gray-900"
                     }`}
                   >
-                    {price.toFixed(2)} €
+                    {price.toFixed(2)} DH
                   </span>
                   {product.on_sale && (
                     <span className="text-gray-500 line-through">
-                      {product.price.toFixed(2)} €
+                      {product.price.toFixed(2)} DH
                     </span>
                   )}
                 </div>

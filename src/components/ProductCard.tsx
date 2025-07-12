@@ -55,21 +55,21 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
         href={`/products/${product.slug}`}
         className="flex-grow flex flex-col h-full"
       >
-        {/* Zone image - hauteur standardisée */}
-        <div className="relative h-52 overflow-hidden">
+        {/* Zone image - hauteur standardisée mais plus petite sur mobile */}
+        <div className="relative h-36 sm:h-44 md:h-52 overflow-hidden">
           {imageUrl ? (
             <Image
               src={imageUrl}
               alt={product.title}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               quality={90}
             />
           ) : (
             <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
               <svg
-                className="w-12 h-12 text-gray-300"
+                className="w-8 h-8 sm:w-12 sm:h-12 text-gray-300"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -85,47 +85,42 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
             </div>
           )}
 
-          {/* Overlay gradient au survol */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/20 opacity-0 group-hover:opacity-70 transition-opacity duration-300" />
-
-          {/* Badge de promotion - position ajustée */}
+          {/* Badges plus petits sur mobile */}
           {product.on_sale && (
-            <span className="absolute top-2.5 right-2.5 bg-red-600/90 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+            <span className="absolute top-1.5 sm:top-2.5 right-1.5 sm:right-2.5 bg-red-600/90 text-white text-[10px] sm:text-xs font-bold px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-md">
               PROMO
             </span>
           )}
 
-          {/* Badge populaire - position ajustée */}
           {product.featured && !product.on_sale && (
-            <span className="absolute top-2.5 left-2.5 bg-indigo-600/90 text-white text-xs font-medium px-2.5 py-1 rounded-full shadow-md">
+            <span className="absolute top-1.5 sm:top-2.5 left-1.5 sm:left-2.5 bg-indigo-600/90 text-white text-[10px] sm:text-xs font-medium px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-md">
               Populaire
             </span>
           )}
         </div>
 
-        {/* Zone informations - padding harmonisé */}
-        <div className="p-4 flex-grow flex flex-col">
-          {/* Structure fixe avec hauteur garantie */}
-          <div className="flex flex-col min-h-[120px]">
-            {/* Catégorie avec espacement réduit */}
+        {/* Zone informations - padding réduit sur mobile */}
+        <div className="p-2 sm:p-3 md:p-4 flex-grow flex flex-col">
+          <div className="flex flex-col min-h-[80px] sm:min-h-[100px] md:min-h-[120px]">
+            {/* Catégorie plus petite sur mobile */}
             {product.category && (
-              <span className="text-xs font-medium text-red-600 uppercase tracking-wider mb-1.5">
+              <span className="text-[9px] sm:text-xs font-medium text-red-600 uppercase tracking-wider mb-1">
                 {product.category.name}
               </span>
             )}
 
-            {/* Titre avec hauteur fixe */}
-            <h3 className="text-lg font-semibold text-gray-800 group-hover:text-red-600 transition-colors duration-300 line-clamp-2 min-h-[3.5rem] mb-2">
+            {/* Titre plus petit et hauteur réduite sur mobile */}
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 group-hover:text-red-600 transition-colors duration-300 line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem] md:min-h-[3.5rem] mb-1 sm:mb-2">
               {product.title}
             </h3>
 
-            {/* Prix avec espacement ajusté */}
-            <div className="flex items-center mt-1">
-              <span className="text-lg font-bold text-gray-900">
+            {/* Prix ajusté pour mobile */}
+            <div className="flex items-center mt-auto">
+              <span className="text-base sm:text-lg font-bold text-gray-900">
                 {price.toFixed(2)} DH
               </span>
               {product.on_sale && product.sale_price && (
-                <span className="ml-2 text-sm text-gray-500 line-through">
+                <span className="ml-1 sm:ml-2 text-xs sm:text-sm text-gray-500 line-through">
                   {product.price.toFixed(2)} DH
                 </span>
               )}
@@ -134,16 +129,16 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
         </div>
       </Link>
 
-      {/* Bouton d'ajout au panier avec marges et padding harmonisés */}
-      <div className="px-4 pb-4 pt-0 mt-auto">
+      {/* Bouton plus petit sur mobile */}
+      <div className="px-2 sm:px-3 md:px-4 pb-2 sm:pb-3 md:pb-4 pt-0 mt-auto">
         <button
           onClick={handleAddToCart}
-          className="w-full rounded-lg bg-red-600 text-white font-medium py-2.5 flex items-center justify-center gap-2 shadow-sm hover:bg-red-700 transition-colors duration-300"
+          className="w-full rounded-lg bg-red-600 text-white font-medium text-xs sm:text-sm md:text-base py-1.5 sm:py-2 md:py-2.5 flex items-center justify-center gap-1 shadow-sm hover:bg-red-700 transition-colors duration-300 cursor-pointer"
           aria-label="Ajouter au panier"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-4 w-4"
+            className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -155,7 +150,8 @@ const ProductCard = ({ product, index, delay = 150 }: ProductCardProps) => {
               d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
             />
           </svg>
-          Ajouter au panier
+          <span className="hidden xs:inline">Ajouter au panier</span>
+            <span className="xs:hidden">Acheter</span>
         </button>
       </div>
     </div>
