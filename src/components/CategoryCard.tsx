@@ -71,7 +71,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       <div className="p-4 sm:p-5 flex flex-col flex-1">
         {/* Title with fixed height */}
         <div className="h-7 sm:h-8 mb-2">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-800 group-hover:text-red-600 transition-colors duration-300 line-clamp-2">
+          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 group-hover:text-red-600 transition-colors duration-300 line-clamp-2">
             {category.name}
           </h3>
         </div>

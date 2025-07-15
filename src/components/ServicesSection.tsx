@@ -249,13 +249,13 @@ const ServicesSection: React.FC = () => {
                     </p>
 
                     {/* Badge informatif non cliquable à la place du bouton */}
-                    <div className="mt-6 inline-flex items-center gap-2">
-                      <span className="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-medium border border-white/30 shadow-lg">
+                    <div className="mt-6 flex flex-col sm:flex-row lg:flex-col lg:items-start xl:flex-row items-start sm:items-center gap-2">
+                      <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-medium border border-white/30 shadow-lg mb-2 sm:mb-0">
                         {service.badge}
                       </span>
-                      <span className="bg-red-600 text-white px-4 py-2 rounded-full font-medium shadow-md flex items-center">
+                      <span className="bg-red-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-medium shadow-md flex items-center">
                         <svg
-                          className="w-4 h-4 mr-2"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -268,7 +268,9 @@ const ServicesSection: React.FC = () => {
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        Renseignez-vous en magasin
+                        <span className="whitespace-nowrap">
+                          Renseignez-vous en magasin
+                        </span>
                       </span>
                     </div>
                   </div>
